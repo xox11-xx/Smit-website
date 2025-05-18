@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>School Courses offers</title>
+    <style>
+        :root {
+            --primary-color: #26a69a; /* Teal */
+            --primary-darker: #00796d;
+            --secondary-color: #78909c; /* Blue Gray */
+            --secondary-darker: #4b636e;
+            --background-color: #eceff1; /* Light Gray */
+            --card-background: white;
+            --text-color: #37474f; /* Dark Gray */
+            --heading-color: #26a69a; /* Teal for Headings */
+            --border-color: #cfd8dc; /* Light Gray Border */
+            --light-text-color: #78909c; /* Blue Gray Light */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif; /* A modern, clean font */
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            line-height: 1.6; /* Improved readability */
+            position: relative; /* To position the back home button */
+            padding-bottom: 60px; /* Add some padding at the bottom for the button */
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.2rem 0; /* Slightly more padding */
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Softer shadow */
+            animation: none; /* Removed original animation */
+        }
+
+        nav {
+            background-color: var(--secondary-color); /* Using secondary color for nav */
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav a {
+            color: white;
+            padding: 1rem 1.5rem; /* Adjusted padding */
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease; /* Using transition property */
+            border-radius: 6px; /* Added border-radius for buttons */
+            margin: 0.5rem; /* Added some margin between nav items */
+        }
+
+        nav a:hover {
+            background-color: var(--secondary-darker); /* Darker shade on hover */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); /* Subtle shadow on hover */
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem; /* Increased gap */
+            padding: 2.5rem 1.5rem; /* Increased padding */
+            max-width: 960px; /* Slightly wider container */
+            margin: 20px auto; /* Add some top/bottom margin */
+        }
+
+        section {
+            padding: 0; /* Reset section padding */
+            margin: 0; /* Reset section margin */
+            max-width: none; /* Reset max-width */
+            animation: none; /* Removed original animation */
+        }
+
+        .card {
+            background: var(--card-background);
+            border-radius: 8px; /* Softer rounded corners */
+            padding: 1.8rem; /* Increased padding */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* Softer shadow */
+            border: 1px solid var(--border-color); /* Add a subtle border */
+            margin-bottom: 1.8rem; /* Add margin between sections (now cards) */
+        }
+
+        h2 {
+            margin-top: 0;
+            color: var(--heading-color);
+            border-bottom: 2px solid var(--primary-color); /* Accent border */
+            padding-bottom: 0.8rem;
+            margin-bottom: 1.2rem;
+            font-weight: 500; /* Slightly lighter font weight */
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin-top: 1.5rem;
+            margin-bottom: 0.6rem;
+            border-bottom: 1px solid var(--secondary-color);
+            padding-bottom: 0.4rem;
+            font-weight: 500;
+        }
+
+        ul {
+            padding-left: 1.5rem;
+            list-style-type: disc;
+        }
+
+        ul li {
+            margin-bottom: 0.8rem;
+            color: var(--text-color);
+        }
+
+        form input[type="text"],
+        form input[type="email"],
+        form textarea {
+            padding: 0.9rem; /* Increased input padding */
+            margin-bottom: 1rem; /* Increased margin */
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            width: calc(100% - 1.8rem); /* Adjust width for padding */
+            box-sizing: border-box;
+            font-size: 0.95rem;
+        }
+
+        form input[type="submit"] {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.2rem; /* More substantial button */
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); /* Subtle button shadow */
+            width: 100%; /* Make submit button full width */
+            margin-top: 1rem;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: var(--primary-darker);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Slightly more prominent hover shadow */
+        }
+
+        footer {
+            background-color: var(--secondary-color); /* Using secondary color for footer */
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        /* Form Submission Feedback Styles */
+        .form-message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Back Home Button Styles */
+        .back-home-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+            z-index: 1000; /* Ensure it's above other elements */
+            text-decoration: none; /* Remove underline from link */
+        }
+
+        .back-home-button:hover {
+            background-color: var(--secondary-darker);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Our School Courses offers</h1>
+        <p>Empowering Students for a Brighter Future</p>
+    </header>
+
+    <nav>
+        <a href="#about">About</a>
+        <a href="#courses">Courses</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <section id="about">
+                <h2>About Our College</h2>
+                <p>Our college is dedicated to academic excellence and fostering innovation. We provide students with the tools and knowledge needed to succeed in today's world.</p>
+            </section>
+        </div>
+
+        <div class="card">
+            <section id="courses">
+                <h2>Courses Offered</h2>
+
+                <h3>Arts & Communication</h3>
+                <ul>
+                    <li>4-Year Bachelor of Arts in Mass Communication (Major in Broadcasting and Journalism)</li>
+                    <li>2-Year in Mass Communication</li>
+                </ul>
+
+                <h3>Criminology & Political Science</h3>
+                <ul>
+                    <li>4-Year Bachelor of Science in Criminology (Major in Law Enforcement Administration and Police Administration)</li>
+                    <li>4-Year Bachelor of Arts in Political Science</li>
+                    <li>2-Year Police Science</li>
+                </ul>
+
+                <h3>Technology & Engineering</h3>
+                <ul>
+                    <li>4-Year Bachelor of Science in Information Technology</li>
+                    <li>2-Year Information Technology</li>
+                    <li>4-Year Bachelor of Science in Industrial Education (Major in Electronics Technology)</li>
+                    <li>2-Year Electronics Technology</li>
+                    <li>2-Year Automotive Technology</li>
+                </ul>
+
+                <h3>Business & Management</h3>
+                <ul>
+                    <li>4-Year Bachelor of Science in Commerce (Major in Business Administration)</li>
+                    <li>4-Year Bachelor of Science in Office Management</li>
+                    <li>2-Year Office Management</li>
+                </ul>
+
+                <h3>Education</h3>
+                <ul>
+                    <li>4-Year Bachelor of Science in Secondary Education</li>
+                    <li>4-Year Bachelor of Elementary Education</li>
+                </ul>
+
+                <h3>Hospitality & Health</h3>
+                <ul>
+                    <li>4-Year Bachelor of Science in Hotel and Restaurant Management</li>
+                    <li>2-Year Hotel and Restaurant Management</li>
+                    <li>2-Year in Midwifery</li>
+                    <li>2-Year Pharmacy Aide</li>
+                    <li>2-Year Health Care Services</li>
+                </ul>
+
+                <h3>TESDA Programs</h3>
+                <ul>
+                    <li>Computer Hardware Servicing NCII</li>
+                    <li>Food and Beverage Services NCII</li>
+                    <li>Housekeeping Services NCII</li>
+                    <li>Baking and Pastry Production NCII</li>
+                    <li>Front Office Services NCII</li>
+                    <li>Bar Tending Services NCII</li>
+                    <li>Commercial Cooking NCII</li>
+                    <li>Tour Guiding NCII</li>
+                    <li>Health Care Services NCII</li>
+                </ul>
+
+                <h3>Special Programs Offered</h3>
+                <ul>
+                    <li>Self-Paced Training for Call Center Agent</li>
+                    <li>Self-Paced Training for Medical Transcription Course</li>
+                </ul>
+            </section>
+        </div>
+
+        <div class="card">
+            <section id="contact">
+                <h2>Contact Us</h2>
+                <form id="contactForm" action="https://formspree.io/f/xzzrdnbo" method="POST">
+                    <input type="text" name="name" placeholder="Your Name" required />
+                    <input type="email" name="_replyto" placeholder="Your Email" required />
+                    <textarea rows="5" name="message" placeholder="Your Message"></textarea>
+                    <input type="submit" value="Send Message" />
+                </form>
+                <div id="formMessage" class="form-message" style="display:none;"></div>
+            </section>
+        </div>
+    </div>
+
+    
+
+    <a href="Admin.Html" class="back-home-button">Back Home</a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contactForm');
+            const formMessageDiv = document.getElementById('formMessage');
+
+            contactForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                fetch(contactForm.action, {
+                    method: 'POST',
+                    body: new FormData(contactForm),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        formMessageDiv.textContent = 'Message sent successfully!';
+                        formMessageDiv.className = 'form-message success-message';
+                        formMessageDiv.style.display = 'block';
+                        contactForm.reset();
+                    } else {
+                        response.json().then(data => {
+                            formMessageDiv.textContent = 'Failed to send message. Please try again.';
+                            if (data && data.errors) {
+                                formMessageDiv.textContent += ' Details: ' + Object.values(data.errors).join(', ');
+                            }
+                            formMessageDiv.className = 'form-message error-message';
+                            formMessageDiv.style.display = 'block';
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error sending form:', error);
+                    formMessageDiv.textContent = 'An unexpected error occurred. Please try again later.';
+                    formMessageDiv.className = 'form-message error-message';
+                    formMessageDiv.style.display = 'block';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

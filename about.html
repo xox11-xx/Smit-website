@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Our School</title>
+    <style>
+        :root {
+            --primary-color: #26a69a; /* Teal */
+            --primary-darker: #00796d;
+            --secondary-color: #78909c; /* Blue Gray */
+            --secondary-darker: #4b636e;
+            --background-color: #eceff1; /* Light Gray */
+            --card-background: white;
+            --text-color: #37474f; /* Dark Gray */
+            --heading-color: #26a69a; /* Teal for Headings */
+            --border-color: #cfd8dc; /* Light Gray Border */
+            --light-text-color: #78909c; /* Blue Gray Light */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif; /* A modern, clean font */
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            line-height: 1.6; /* Improved readability */
+            position: relative; /* To position the back button absolutely */
+            padding-bottom: 60px; /* Add some padding at the bottom for the button */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.2rem 0; /* Slightly more padding */
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Softer shadow */
+            animation: none; /* Removed original animation */
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem; /* Increased gap */
+            padding: 2.5rem 1.5rem; /* Increased padding */
+            max-width: 960px; /* Slightly wider container */
+            margin: 20px auto; /* Add some top/bottom margin */
+        }
+
+        section {
+            padding: 0; /* Reset section padding */
+            margin: 0; /* Reset section margin */
+            max-width: none; /* Reset max-width */
+            animation: none; /* Removed original animation */
+        }
+
+        .card {
+            background: var(--card-background);
+            border-radius: 8px; /* Softer rounded corners */
+            padding: 1.8rem; /* Increased padding */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* Softer shadow */
+            border: 1px solid var(--border-color); /* Add a subtle border */
+            margin-bottom: 1.8rem; /* Add margin between sections (now cards) */
+            opacity: 1; /* Override original animation */
+            transform: translateY(0); /* Override original animation */
+        }
+
+        section h2 {
+            color: var(--heading-color); /* Teal for Headings */
+            border-bottom: 2px solid var(--primary-color); /* Accent border */
+            padding-bottom: 0.8rem;
+            margin-top: 0;
+            margin-bottom: 1.2rem;
+            font-weight: 500; /* Slightly lighter font weight */
+        }
+
+        p, li {
+            font-size: 1em;
+            color: var(--text-color); /* Dark Gray */
+        }
+
+        ul {
+            padding-left: 1.5rem;
+            list-style: disc; /* Using disc instead of square */
+        }
+
+        li {
+            margin-bottom: 0.8rem;
+        }
+
+        a {
+            color: var(--primary-color); /* Teal for links */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--primary-darker);
+        }
+
+        footer {
+            background-color: var(--secondary-color); /* Blue Gray for footer */
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px; /* Add some top margin to separate from content */
+            position: relative; /* Reset position if it was fixed */
+            bottom: auto;
+            width: auto;
+        }
+
+        /* Back Home Button Styles */
+        .back-home-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: var(--secondary-color); /* Blue Gray */
+            color: white;
+            padding: 0.8rem 1.2rem;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+            z-index: 1000; /* Ensure it's above other elements */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .back-home-button:hover {
+            background-color: var(--secondary-darker);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>About Our School</h1>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <section>
+                <h2>About Us</h2>
+                <p>Our school is dedicated to fostering a vibrant and supportive learning environment where every student can flourish academically and personally. Since our establishment in [Year], we've proudly served the community by emphasizing a comprehensive educational approach that cultivates creativity, sharpens critical thinking, and develops strong leadership qualities.</p>
+
+                <p>We are pleased to offer a diverse range of programs tailored for students from [Grades or Age Group] through [Grades or Age Group]. Our passionate and experienced faculty and staff are committed to making a meaningful difference in the lives of our students. Our state-of-the-art facilities provide an exceptional setting for both learning and innovation.</p>
+
+                <p>At the heart of our school is a deep commitment to creating an inclusive and diverse community where each student feels valued, respected, and empowered. Our goal is to help students unlock their full potential and equip them with the skills and knowledge necessary for future success.</p>
+            </section>
+        </div>
+
+        <div class="card">
+            <section>
+                <h2>Our Vision</h2>
+                <p>Southern Mindanao Institute of Technology Incorporated is a learner-centered institution committed to quality education.</p>
+            </section>
+        </div>
+
+        <div class="card">
+            <section>
+                <h2>Our Mission</h2>
+                <p>Southern Mindanao Institute of Technology commits tot ptovide the community with competent, ethical and research oriented through: effecient and effective faculty and staff, Adequate and appropriate instructional facilities, Innovative and responsive teaching strategies.</p>
+            </section>
+        </div>
+
+        <div class="card">
+            <section>
+                <h2>Our Core Values</h2>
+                <p> Southern Minandao Institute of Technology, Inc is a time concious institution that embraces Service, Modesty, Integrative, Trust.</p>
+            </section>
+        </div>
+
+        <div class="card">
+            <section>
+                <h2>Contact Us</h2>
+                <p>We warmly invite you to reach out if you wish to discover more about our school or arrange a visit:</p>
+                <ul>
+                    <li>Email: <a href="mailto:info@ourschool.com">info@ourschool.com</a></li>
+                    <li>Phone: (064) 200 3549</li>
+                    <li>Address: Brgy. Buenaflor, National Highway, Tacurong, Philippines</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    
+
+    <a href="Admin.Html" class="back-home-button">Back Home</a>
+
+</body>
+</html>

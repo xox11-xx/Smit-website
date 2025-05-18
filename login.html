@@ -1,0 +1,324 @@
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('bg.jpg'); /* Replace with your background image URL */
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+    
+        .background-blur {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            backdrop-filter: blur(5px);
+            z-index: 0;
+        }
+    
+        .container {
+            width: 800px; /* Fixed width */
+            height: 500px; /* Fixed height */
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            overflow: hidden;
+            position: relative; /* For z-index context */
+            z-index: 1;
+        }
+    
+        .left-section {
+            flex: 1;
+            background: linear-gradient(135deg, #1e88e5, #64b5f6); /* Blue gradient */
+            color: white;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; /* Center items vertically in the left section */
+            position: relative;
+            overflow: hidden;
+        }
+    
+        .cloud-shape {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+    
+        .cloud-1 {
+            width: 150px;
+            height: 150px;
+            top: 20%;
+            left: 10%;
+        }
+    
+        .cloud-2 {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            right: 5%;
+        }
+    
+        .cloud-3 {
+            width: 100px;
+            height: 100px;
+            bottom: 15%;
+            left: 30%;
+        }
+    
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* This will center the items horizontally */
+            margin-bottom: 1.5rem;
+        }
+    
+        .logo-circle {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+    
+        .logo-image {
+            max-width: 80%;
+            max-height: 80%;
+            display: block;
+            color: #1e88e5; /* Example color for the rocket */
+        }
+    
+        .welcome-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-align: center; /* Also center the text within its own div */
+        }
+    
+        .welcome-text-bold {
+            font-weight: bold;
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            text-align: center; /* Also center the text within its own div */
+        }
+    
+        .sub-text {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            text-align: center;
+        }
+    
+        .right-section {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    
+        .login-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #555;
+            text-align: left;
+            width: 100%;
+        }
+    
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.6rem;
+            margin-bottom: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 0.3rem;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+    
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            width: 100%;
+            justify-content: flex-start;
+        }
+    
+        .checkbox-container input[type="checkbox"] {
+            width: auto;
+            margin-right: 0.5rem;
+        }
+    
+        .login-button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #1e88e5;
+            border: none;
+            color: white;
+            font-weight: 600;
+            border-radius: 0.3rem;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.2s ease-in-out;
+        }
+    
+        .login-button:hover {
+            background-color: #1565c0;
+        }
+    
+        .forgot-password, .other-links {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #555;
+        }
+    
+        .forgot-password a, .other-links a {
+            color: #1e88e5;
+            text-decoration: none;
+        }
+    
+        .forgot-password a:hover, .other-links a:hover {
+            text-decoration: underline;
+        }
+    
+        .date-time {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            color: white;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-blur"></div>
+
+    <div class="container">
+        <div class="left-section">
+            <div class="cloud-shape cloud-1"></div>
+            <div class="cloud-shape cloud-2"></div>
+            <div class="cloud-shape cloud-3"></div>
+            <div class="logo-container">
+                <div class="logo-circle">
+                    <img src="logo.png" alt="Spacer Logo" class="logo-image" />
+                        <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71L12 2zm0 3.83L18.66 19l-1.41 1.41L12 16.67 6.75 20.3 5.34 18.9 12 5.83z"/>
+                    </svg>
+                </div>
+                <div class="welcome-text">Welcome to</div>
+                <div class="welcome-text-bold">Southern Minandao Institute of Technology Inc.</div>
+            </div>
+            <div class="sub-text">
+                Enter your credentials below to access the admin dashboard.
+            </div>
+            <div class="sub-text">
+                Username:admin
+            </div>
+            <div class="sub-text">
+                Password:password123
+            </div>
+            <div class="date-time" id="dateTime"></div>
+        </div>
+        <div class="right-section">
+            
+            <form id="loginForm" onsubmit="return validateLogin()">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+
+                <div class="checkbox-container">
+                    <input type="checkbox" id="showPassword" onclick="togglePassword()">
+                    <label for="showPassword" style="color:#555;">Show Password</label>
+                </div>
+
+                <button type="submit" class="login-button">Login</button>
+            </form>
+
+            <div class="forgot-password">
+                <a href="#">Forgot Password?</a>
+            </div>
+            <div class="other-links">
+                <a href="#">Student Portal</a> | <a href="#">Faculty Login</a>
+            </div>
+
+            <div id="custom-alert" role="alert" style="display: none; margin-top: 1rem; text-align: center;">
+                <div class="alert-title" style="font-weight: bold; margin-bottom: 0.3rem;">Error</div>
+                <div class="alert-message">Incorrect username or password. Please try again.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const customAlert = document.getElementById('custom-alert');
+
+        function validateLogin() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (username === "admin" && password === "password123") {
+                window.location.href = "admin.html";
+                return false;
+            } else {
+                customAlert.style.display = 'block';
+                setTimeout(() => {
+                    customAlert.style.display = 'none';
+                }, 3000);
+                return false;
+            }
+        }
+
+        function togglePassword() {
+            const passwordInput = document.getElementById("password");
+            passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+        }
+
+        function updateDateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' };
+            document.getElementById('dateTime').textContent = now.toLocaleDateString('en-US', options);
+        }
+
+        // Update the date and time immediately when the page loads
+        updateDateTime();
+
+        // Update the date and time every second (optional, if you want it to be dynamic)
+        // setInterval(updateDateTime, 1000);
+    </script>
+</body>
+</html>

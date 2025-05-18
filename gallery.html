@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>School Gallery</title>
+  <style>
+    :root {
+      --primary-color: #26a69a;
+      --primary-darker: #00796d;
+      --secondary-color: #78909c;
+      --secondary-darker: #4b636e;
+      --background-color: #eceff1;
+      --card-background: white;
+      --text-color: #37474f;
+      --heading-color: #26a69a;
+      --border-color: #cfd8dc;
+      --light-text-color: #78909c;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding-bottom: 60px;
+      background: linear-gradient(135deg, #e0f7fa, #e1f5fe);
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1.2rem 0;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      margin: 0;
+      color: white;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    header h1:hover {
+      transform: scale(1.02);
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+      padding: 2.5rem 1.5rem;
+      max-width: 960px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border-color);
+      animation: fadeInContainer 0.8s ease-in-out;
+    }
+
+    @keyframes fadeInContainer {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: var(--heading-color);
+      margin: 40px 0 20px;
+      font-weight: 500;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 0.8rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    .gallery-item {
+      background: var(--card-background);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .caption {
+      padding: 14px;
+      text-align: center;
+      font-size: 1rem;
+      color: var(--text-color);
+      font-weight: 500;
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      z-index: 1001;
+      transition: transform 0.2s ease;
+    }
+
+    .lightbox-close:hover {
+      transform: scale(1.2);
+    }
+
+    .lightbox-single img {
+      max-width: 85vw;
+      max-height: 85vh;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+    }
+
+    .lightbox-album {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      max-width: 90%;
+      max-height: 80%;
+      overflow-y: auto;
+      padding: 20px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+
+    .lightbox-album img {
+      width: 200px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .lightbox-album img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(255, 255, 255, 0.3);
+    }
+
+    .back-home-button {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: var(--secondary-color);
+      color: white;
+      padding: 0.8rem 1.2rem;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      z-index: 1000;
+      font-weight: 500;
+    }
+
+    .back-home-button:hover {
+      background-color: var(--secondary-darker);
+    }
+
+    footer {
+      background-color: var(--primary-darker);
+      color: white;
+      text-align: center;
+      padding: 1rem 0;
+      width: 100%;
+      margin-top: 40px;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Welcome to Our School Gallery</h1>
+</header>
+
+<!-- School Facilities Section -->
+<div class="container">
+  <h2>School Facilities</h2>
+  <div class="gallery">
+    <div class="gallery-item" onclick="openSingle('library.jpg')">
+      <img src="library.jpg" alt="Library">
+      <div class="caption">School Library</div>
+    </div>
+    <div class="gallery-item" onclick="openSingle('Computer Lab.jpg')">
+      <img src="Computer Lab.jpg" alt="Computer Room">
+      <div class="caption">Computer Room</div>
+    </div>
+    <div class="gallery-item" onclick="openSingle('Field.jpg')">
+      <img src="Field.jpg" alt="Field">
+      <div class="caption">School Field</div>
+    </div>
+    <div class="gallery-item" onclick="openSingle('Crim.jpg')">
+      <img src="Crim.jpg" alt="Criminology Building">
+      <div class="caption">Criminology Building</div>
+    </div>
+    <div class="gallery-item" onclick="openSingle('bg.jpg')">
+      <img src="bg.jpg" alt="Main Building">
+      <div class="caption">Main Building</div>
+    </div>
+  </div>
+</div>
+
+<!-- School Events Section -->
+<div class="container">
+  <h2>School Events</h2>
+  <div class="gallery">
+    <div class="gallery-item" onclick="openAlbum(['Intrams/i1.jpg', 'Intrams/i2.jpg', 'Intrams/i3.jpg'])">
+      <img src="Intrams/i1.jpg" alt="Intramurals">
+      <div class="caption">Intramurals Day Celebration</div>
+    </div>
+    <div class="gallery-item" onclick="openAlbum(['NWM/w1.jpg', 'NWM/w2.jpg', 'NWM/w3.jpg'])">
+      <img src="NWM/w1.jpg" alt="Women's Month">
+      <div class="caption">National Women's Month Celebration</div>
+    </div>
+    <div class="gallery-item" onclick="openAlbum(['Buwan ng wika/b1.jpg', 'Buwan ng wika/b2.jpg'])">
+      <img src="Buwan ng wika/b1.jpg" alt="Buwan ng Wika">
+      <div class="caption">Buwan ng Wika</div>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <a href="#" class="lightbox-close" onclick="closeLightbox(); return false;">&times;</a>
+  <div id="lightbox-content" onclick="event.stopPropagation()"></div>
+</div>
+
+<a href="Admin.Html" class="back-home-button">Back Home</a>
+
+<script>
+  let isAlbumPreview = false;
+  let currentAlbum = [];
+
+  function openSingle(src) {
+    const content = document.getElementById('lightbox-content');
+    content.className = 'lightbox-single';
+    content.innerHTML = `<img src="${src}" alt="Preview">`;
+    document.getElementById('lightbox').style.display = 'flex';
+    isAlbumPreview = false;
+  }
+
+  function openAlbum(imageArray) {
+    const content = document.getElementById('lightbox-content');
+    content.className = 'lightbox-album';
+    content.innerHTML = '';
+    currentAlbum = imageArray;
+    isAlbumPreview = true;
+
+    imageArray.forEach(src => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = "Album Image";
+      img.addEventListener('click', () => previewAlbumImage(src));
+      content.appendChild(img);
+    });
+
+    document.getElementById('lightbox').style.display = 'flex';
+  }
+
+  function previewAlbumImage(src) {
+    const content = document.getElementById('lightbox-content');
+    content.className = 'lightbox-single';
+    content.innerHTML = `<img src="${src}" alt="Enlarged Album Image">`;
+  }
+
+  function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    const content = document.getElementById('lightbox-content');
+
+    if (isAlbumPreview && content.className === 'lightbox-single') {
+      openAlbum(currentAlbum);
+    } else {
+      lightbox.style.display = 'none';
+      content.innerHTML = '';
+      currentAlbum = [];
+      isAlbumPreview = false;
+    }
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === "Escape") closeLightbox();
+  });
+</script>
+
+</body>
+</html>

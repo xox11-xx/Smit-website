@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #26a69a;
+      --primary-darker: #00796d;
+      --secondary-color: #78909c;
+      --secondary-darker: #4b636e;
+      --background-color: #eceff1;
+      --card-background: white;
+      --text-color: #37474f;
+      --heading-color: #26a69a;
+      --border-color: #cfd8dc;
+      --light-text-color: #78909c;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      height: 100vh;
+      position: relative;
+    }
+
+    .top-header {
+      background-color: var(--secondary-color);
+      color: #fff;
+      padding: 5px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+
+    .top-header .info-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .top-header .info-left div {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .top-header .social-icons a {
+      color: white;
+      margin-left: 10px;
+      font-size: 16px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .top-header .social-icons a:hover {
+      color: #dcdcdc;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: #fff;
+      padding: 15px 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .header-left img {
+      width: 50px;
+      height: auto;
+    }
+
+    .header-left .school-name {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 1.2;
+    }
+
+    .school-name .main-title {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .school-name .sub-title {
+      font-size: 16px;
+      margin: 0;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+    }
+
+    nav a {
+      color: white;
+      padding: 5px 10px;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #575757;
+    }
+
+    .welcome-section {
+      position: absolute;
+      top: 35%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 800px;
+      width: 90%;
+    }
+
+    .welcome-section h1 {
+      font-size: 48px;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    .welcome-section p {
+      font-size: 18px;
+      line-height: 1.6;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+    }
+
+    /* === IMAGE CAROUSEL WITH ARROWS === */
+    .carousel-wrapper {
+      position: absolute;
+      top: 65%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      width: 90%;
+      max-width: 1000px;
+    }
+
+    .image-row {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      gap: 20px;
+      width: 100%;
+    }
+
+    .image-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .image-container {
+      text-align: center;
+    }
+
+    .image-container img {
+      width: 250px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+    }
+
+    .image-title {
+      color: white;
+      margin-top: 8px;
+      font-size: 16px;
+      text-shadow: 1px 1px 3px black;
+    }
+
+    .carousel-arrow {
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 50%;
+      z-index: 10;
+      transition: background 0.3s;
+    }
+
+    .carousel-arrow:hover {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .left-arrow {
+      margin-right: 10px;
+    }
+
+    .right-arrow {
+      margin-left: 10px;
+    }
+
+    /* === LIGHTBOX === */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .lightbox-img {
+      max-width: 80%;
+      max-height: 80%;
+      transition: transform 0.3s ease;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 50px;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      padding: 10px;
+    }
+
+    .nav-btn.left {
+      left: 30px;
+    }
+
+    .nav-btn.right {
+      right: 30px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-header">
+  <div class="info-left">
+    <div class="address">
+      <a href="https://www.google.com/maps/place/Southern+Mindanao+Institute+Technology,+Inc./@6.6855081,124.6679548,19.25z/data=!4m14!1m7!3m6!1s0x32f80d5c00771a3f:0x8cbf808f21d2ac36!2sSouthern+Mindanao+Institute+Technology,+Inc.!8m2!3d6.6857896!4d124.6679603!16s%2Fg%2F1tf5yttz!3m5!1s0x32f80d5c00771a3f:0x8cbf808f21d2ac36!8m2!3d6.6857896!4d124.6679603!16s%2Fg%2F1tf5yttz?entry=ttu&g_ep=EgoyMDI1MDQyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="color: white; text-decoration: none;">
+        <i class="fas fa-map-marker-alt"></i> Brgy. Buenaflor, National Highway, Tacurong, Philippines
+      </a>
+    </div>
+    <div class="phone-number">
+      <i class="fas fa-phone"></i> (064) 200 3549
+    </div>
+  </div>
+  <div class="social-icons">
+    <a href="https://www.facebook.com/share/19addHhoCB/" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+    <a href="https://instagram.com/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="mailto:example@gmail.com" target="_blank" title="Gmail"><i class="fas fa-envelope"></i></a>
+  </div>
+</div>
+
+<header>
+  <div class="header-left">
+    <img src="logo.png" alt="School Logo">
+    <div class="school-name">
+      <h1 class="main-title">Southern Mindanao</h1>
+      <h2 class="sub-title">Institute of Technology Inc.</h2>
+    </div>
+  </div>
+  <nav>
+    <a href="Admin.Html">Home</a>
+    <a href="about.html">About</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="dash.html">Dashboard</a>
+    <a href="Course.html">Course</a>
+  </nav>
+</header>
+
+<div class="welcome-section">
+  <h1>Welcome to Southern Mindanao Institute of Technology Inc.</h1>
+  <p>Your Gateway to Quality Education in Mindanao. At the Southern Mindanao Institute of Technology (SMIT), we are committed to nurturing future leaders and innovators through academic excellence, transformative education, and strong community values.</p>
+</div>
+
+<div class="carousel-wrapper">
+  <div class="carousel-arrow left-arrow" onclick="scrollCarousel(-1)">
+    ❮
+  </div>
+  <div class="image-row" id="carousel">
+    <div class="image-container">
+      <img src="bg.jpg" alt="Image 1" onclick="openLightbox(0)">
+      <p class="image-title">Main Campus</p>
+    </div>
+    <div class="image-container">
+      <img src="field.jpg" alt="Image 2" onclick="openLightbox(1)">
+      <p class="image-title">Field Grounds</p>
+    </div>
+    <div class="image-container">
+      <img src="Crim.jpg" alt="Image 3" onclick="openLightbox(2)">
+      <p class="image-title">Criminology Building</p>
+    </div>
+    <div class="image-container">
+      <img src="library.jpg" alt="Image 4" onclick="openLightbox(3)">
+      <p class="image-title">School Library</p>
+    </div>
+    <div class="image-container">
+      <img src="Computer Lab.jpg" alt="Image 5" onclick="openLightbox(4)">
+      <p class="image-title">Computer Lab</p>
+    </div>
+    <div class="image-container">
+      <img src="Gate.jpg" alt="Image 6" onclick="openLightbox(5)">
+      <p class="image-title">School Gate</p>
+    </div>
+  </div>
+  <div class="carousel-arrow right-arrow" onclick="scrollCarousel(1)">
+    ❯
+  </div>
+</div>
+
+<div id="lightbox" class="lightbox">
+  <span class="close-btn" onclick="closeLightbox()">×</span>
+  <img class="lightbox-img" id="lightbox-img" src="">
+  <div class="nav-btn left" onclick="changeSlide(-1)">❮</div>
+  <div class="nav-btn right" onclick="changeSlide(1)">❯</div>
+</div>
+
+<script>
+  const images = [
+    "bg.jpg",
+    "field.jpg",
+    "Crim.jpg",
+    "library.jpg",
+    "Computer Lab.jpg",
+    "Gate.jpg"
+  ];
+
+  let currentIndex = 0;
+
+  function openLightbox(index) {
+    currentIndex = index;
+    document.getElementById("lightbox-img").src = images[index];
+    document.getElementById("lightbox").style.display = "flex";
+  }
+
+  function closeLightbox() {
+    document.getElementById("lightbox").style.display = "none";
+  }
+
+  function changeSlide(direction) {
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = images.length - 1;
+    else if (currentIndex >= images.length) currentIndex = 0;
+
+    const imgElement = document.getElementById("lightbox-img");
+    imgElement.style.transform = `translateX(${direction * -100}%)`;
+    setTimeout(() => {
+      imgElement.src = images[currentIndex];
+      imgElement.style.transform = "translateX(0)";
+    }, 200);
+  }
+
+  function scrollCarousel(direction) {
+    const carousel = document.getElementById("carousel");
+    const scrollAmount = 270;
+    carousel.scrollBy({
+      left: direction * scrollAmount,
+      behavior: 'smooth'
+    });
+  }
+
+  document.addEventListener('keydown', function(event) {
+    if (event.key === "ArrowLeft") {
+      changeSlide(-1);
+    } else if (event.key === "ArrowRight") {
+      changeSlide(1);
+    } else if (event.key === "Escape") {
+      closeLightbox();
+    }
+  });
+</script>
+
+</body>
+</html>

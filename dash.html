@@ -1,0 +1,516 @@
+<!DOCTYPE html> 
+ <html lang="en"> 
+ <head> 
+   <meta charset="UTF-8" /> 
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+   <title>School Dashboard</title> 
+   <style> 
+     :root { 
+       --primary-color: #26a69a; /* Teal */ 
+       --primary-darker: #00796d; 
+       --secondary-color: #78909c; /* Blue Gray */ 
+       --secondary-darker: #4b636e; 
+       --background-color: #eceff1; /* Light Gray */ 
+       --card-background: white; 
+       --text-color: #37474f; /* Dark Gray */ 
+       --heading-color: #26a69a; /* Teal for Headings */ 
+       --border-color: #cfd8dc; /* Light Gray Border */ 
+       --light-text-color: #78909c; /* Blue Gray Light */ 
+     } 
+
+     body { 
+       font-family: 'Roboto', sans-serif; /* A modern, clean font */ 
+       background-color: var(--background-color); 
+       margin: 0; 
+       padding: 0; 
+       color: var(--text-color); 
+       line-height: 1.6; /* Improved readability */ 
+       position: relative; /* To position the back home button */ 
+     } 
+     header { 
+       background-color: var(--primary-color); 
+       color: white; 
+       padding: 1.2rem 0; /* Slightly more padding */ 
+       text-align: center; 
+       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Softer shadow */ 
+     } 
+     .container { 
+       display: flex; 
+       flex-direction: column; 
+       gap: 1.8rem; /* Increased gap */ 
+       padding: 2.5rem 1.5rem; /* Increased padding */ 
+       max-width: 960px; /* Slightly wider container */ 
+       margin: 20px auto; /* Add some top/bottom margin */ 
+     } 
+     .card { 
+       background: var(--card-background); 
+       border-radius: 8px; /* Softer rounded corners */ 
+       padding: 1.8rem; /* Increased padding */ 
+       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* Softer shadow */ 
+       border: 1px solid var(--border-color); /* Add a subtle border */ 
+     } 
+     h2 { 
+       margin-top: 0; 
+       color: var(--heading-color); 
+       border-bottom: 2px solid var(--primary-color); /* Accent border */ 
+       padding-bottom: 0.8rem; 
+       margin-bottom: 1.2rem; 
+       font-weight: 500; /* Slightly lighter font weight */ 
+     } 
+     table { 
+       width: 100%; 
+       border-collapse: collapse; 
+       margin-top: 0.8rem; 
+     } 
+     th, td { 
+       padding: 1rem; /* Increased padding */ 
+       text-align: left; 
+       border-bottom: 1px solid var(--border-color); 
+     } 
+     th { 
+       background-color: #f5f5f5; /* Lighter background for header */ 
+       color: var(--light-text-color); 
+       font-weight: 400; /* Lighter font weight for header */ 
+     } 
+     .card button { 
+       background-color: var(--primary-color); 
+       color: white; 
+       border: none; 
+       padding: 0.8rem 1.2rem; /* More substantial button */ 
+       border-radius: 6px; 
+       cursor: pointer; 
+       font-size: 1rem; 
+       transition: background-color 0.3s ease; 
+       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); /* Subtle button shadow */ 
+     } 
+     .card button:hover { 
+       background-color: var(--primary-darker); 
+       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Slightly more prominent hover shadow */ 
+     } 
+     form { 
+       margin-top: 1.2rem; 
+     } 
+     form input[type="text"], 
+     form input[type="number"], 
+     form select { 
+       padding: 0.9rem; /* Increased input padding */ 
+       margin-bottom: 1rem; /* Increased margin */ 
+       border: 1px solid var(--border-color); 
+       border-radius: 6px; 
+       width: calc(100% - 1.8rem); /* Adjust width for padding */ 
+       box-sizing: border-box; 
+       font-size: 0.95rem; 
+     } 
+     form button { 
+       margin-top: 1rem; 
+       width: 100%; 
+     } 
+     ul { 
+       padding-left: 1.5rem; 
+       list-style-type: disc; 
+     } 
+     ul li { 
+       margin-bottom: 0.8rem; 
+       color: var(--text-color); 
+     } 
+     .student-input-grid, .teacher-input-grid, .schedule-input-grid { 
+       display: grid; 
+       grid-template-columns: 1fr 1fr; 
+       gap: 1rem; /* Increased gap */ 
+     } 
+     .student-input-grid > div, .teacher-input-grid > div, .schedule-input-grid > div { 
+       display: flex; 
+       flex-direction: column; 
+     } 
+     .student-input-grid label, .teacher-input-grid label, .schedule-input-grid label { 
+       margin-bottom: 0.4rem; 
+       font-size: 0.9rem; 
+       color: var(--light-text-color); 
+       font-weight: 500; 
+     } 
+     .schedule-input-grid > div:nth-child(3) { /* Event Time - span 2 columns on smaller screens */ 
+       grid-column: 1 / 3; 
+     } 
+     @media (min-width: 600px) { 
+       .schedule-input-grid > div:nth-child(3) { 
+         grid-column: auto; 
+       } 
+     } 
+     .schedule-input-grid > div:last-child { /* Event Description - span 2 columns */ 
+       grid-column: 1 / 3; 
+     } 
+     /* Specific styling for the "Student Counts by Level" card */ 
+     .card:nth-child(2) h2 { 
+       color: var(--secondary-color); 
+       margin-bottom: 1rem; 
+       border-bottom: 2px solid var(--secondary-color); 
+       padding-bottom: 0.6rem; 
+     } 
+     .card:nth-child(2) ul { 
+       display: flex; 
+       justify-content: space-around; 
+       padding-left: 0; 
+       list-style-type: none; 
+     } 
+     .card:nth-child(2) ul li { 
+       margin-bottom: 0; 
+       text-align: center; 
+       font-weight: bold; 
+       color: var(--text-color); 
+       font-size: 1.1rem; 
+     } 
+     .card:nth-child(2) ul li span { 
+       display: block; 
+       font-size: 0.9rem; 
+       color: var(--light-text-color); 
+       font-weight: normal; 
+     } 
+     .card:nth-child(2) ul li:first-child { color: #f44336; } /* Red for Elementary */ 
+     .card:nth-child(2) ul li:nth-child(2) { color: #4caf50; } /* Green for Junior High */ 
+     .card:nth-child(2) ul li:nth-child(3) { color: #2196f3; } /* Blue for Senior High */ 
+     .card:nth-child(2) ul li:last-child { color: #9c27b0; } /* Purple for College */ 
+
+     /* Style for the "Upcoming Events" list */ 
+     .card:last-child h3 { 
+       color: var(--secondary-color); 
+       margin-top: 1.5rem; 
+       margin-bottom: 0.6rem; 
+       border-bottom: 1px solid var(--secondary-color); 
+       padding-bottom: 0.4rem; 
+       font-weight: 500; 
+     } 
+
+     /* Back Home Button Styles */ 
+     .back-home-button { 
+       position: fixed; 
+       bottom: 20px; 
+       left: 20px; 
+       background-color: var(--secondary-color); 
+       color: white; 
+       border: none; 
+       padding: 0.8rem 1.2rem; 
+       border-radius: 6px; 
+       cursor: pointer; 
+       font-size: 1rem; 
+       transition: background-color 0.3s ease; 
+       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); 
+       z-index: 1000; /* Ensure it's on top of other elements */ 
+     } 
+
+     .back-home-button:hover { 
+       background-color: var(--secondary-darker); 
+       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); 
+     } 
+   </style> 
+ </head> 
+ <body> 
+   <header> 
+     <h1>School Dashboard</h1> 
+   </header> 
+   <div class="container"> 
+
+     <div class="card"> 
+       <h2>Dashboard Overview</h2> 
+       <p>Welcome to the school dashboard. Here you can view student, teacher, and scheduling data.</p> 
+       <table> 
+         <tr> 
+           <th>Total Students</th> 
+           <td>0</td> 
+         </tr> 
+         <tr> 
+           <th>Elementary</th> 
+           <td>0</td> 
+         </tr> 
+         <tr> 
+           <th>Junior High</th> 
+           <td>0</td> 
+         </tr> 
+         <tr> 
+           <th>Senior High</th> 
+           <td>0</td> 
+         </tr> 
+         <tr> 
+           <th>College</th> 
+           <td>0</td> 
+         </tr> 
+         <tr> 
+           <th>Total Teachers</th> 
+           <td>0</td> 
+         </tr> 
+         <tr> 
+           <th>Elementary</th> 
+           <td>0</td> 
+         </tr> 
+         <tr> 
+           <th>Junior High</th> 
+           <td>0</td> 
+         </tr> 
+         <tr> 
+           <th>Senior High</th> 
+           <td>0</td> 
+         </tr> 
+         <tr> 
+           <th>College</th> 
+           <td>0</td> 
+         </tr> 
+         <tr> 
+           <th>Upcoming Events</th> 
+           <td id="upcomingEventsCount">0</td> 
+         </tr> 
+       </table> 
+     </div> 
+
+     <div class="card"> 
+       <h2>Student Counts by Level</h2> 
+       <ul id="levelList"> 
+         <li>Elementary: 0</li> 
+         <li>Junior High: 0</li> 
+         <li>Senior High: 0</li> 
+         <li>College: 0</li> 
+       </ul> 
+       <form onsubmit="addLevel(event)"> 
+         <input type="text" id="levelInput" placeholder="Level: Count" required /> 
+         <button type="submit">Add Level</button> 
+       </form> 
+     </div> 
+
+     <div class="card"> 
+       <h2>Student Data</h2> 
+       <form id="addIndividualStudentForm" onsubmit="addIndividualStudent(event)"> 
+         <div class="student-input-grid"> 
+           <div> 
+             <label for="studentLevel">Student Level:</label> 
+             <select id="studentLevel"> 
+               <option value="Elementary">Elementary</option> 
+               <option value="Junior High">Junior High</option> 
+               <option value="Senior High">Senior High</option> 
+               <option value="College">College</option> 
+             </select> 
+           </div> 
+           <div> 
+             <label for="studentName">Student Name:</label> 
+             <input type="text" id="studentName" placeholder="Enter student name" required /> 
+           </div> 
+           <div> 
+             <label for="studentID">Student ID:</label> 
+             <input type="text" id="studentID" placeholder="Enter student ID" /> 
+           </div> 
+           <div> 
+             <label for="studentGradeYear">Grade/Year:</label> 
+             <input type="text" id="studentGradeYear" placeholder="Enter grade/year" /> 
+           </div> 
+           <div style="grid-column: 1 / 3;"> 
+             <label for="studentClassSection">Class/Section:</label> 
+             <input type="text" id="studentClassSection" placeholder="Enter class/section" /> 
+           </div> 
+         </div> 
+         <button type="submit">Save Student Data</button> 
+       </form> 
+     </div> 
+
+     <div class="card"> 
+       <h2>Student Data List</h2> 
+       <table id="studentTable"> 
+         <tr><th>Name</th><th>Level</th><th>ID</th><th>Grade/Year</th><th>Class/Section</th></tr> 
+       </table> 
+     </div> 
+
+     <div class="card"> 
+       <h2>Teacher Data</h2> 
+       <form id="addIndividualTeacherForm" onsubmit="addIndividualTeacher(event)"> 
+         <div class="teacher-input-grid"> 
+           <div> 
+             <label for="teacherLevel">Teacher Level:</label> 
+             <select id="teacherLevel"> 
+               <option value="Elementary">Elementary</option> 
+               <option value="Junior High">Junior High</option> 
+               <option value="Senior High">Senior High</option> 
+               <option value="College">College</option> 
+             </select> 
+           </div> 
+           <div> 
+             <label for="teacherName">Teacher Name:</label> 
+             <input type="text" id="teacherName" placeholder="Enter teacher name" required /> 
+           </div> 
+           <div> 
+             <label for="teacherID">Teacher ID:</label> 
+             <input type="text" id="teacherID" placeholder="Enter teacher ID" /> 
+           </div> 
+           <div> 
+             <label for="teacherSubject">Subject:</label> 
+             <input type="text" id="teacherSubject" placeholder="Enter subject" /> 
+           </div> 
+         </div> 
+         <button type="submit">Save Teacher Data</button> 
+       </form> 
+     </div> 
+
+     <div class="card"> 
+       <h2>Teacher Data List</h2> 
+       <table id="teacherTable"> 
+         <tr><th>Name</th><th>Level</th><th>ID</th><th>Subject</th></tr> 
+       </table> 
+     </div> 
+
+     <div class="card"> 
+       <h2>Date Scheduling</h2> 
+       <form id="addScheduleForm" onsubmit="addDetailedSchedule(event)"> 
+         <div class="schedule-input-grid"> 
+           <div> 
+             <label for="eventTitle">Event Title:</label> 
+             <input type="text" id="eventTitle" placeholder="Enter event title" required /> 
+           </div> 
+           <div> 
+             <label for="eventDate">Event Date:</label> 
+             <input type="text" id="eventDate" placeholder="mm/dd/yyyy" /> 
+           </div> 
+           <div> 
+             <label for="eventTime">Event Time:</label> 
+             <input type="text" id="eventTime" placeholder="--:--" /> 
+           </div> 
+           <div> 
+             <label for="eventDescription">Event Description:</label> 
+             <input type="text" id="eventDescription" placeholder="Enter event description" /> 
+           </div> 
+         </div> 
+         <button type="submit">Save Schedule</button> 
+       </form> 
+       <h3>Upcoming Events</h3> 
+       <ul id="scheduleList"> 
+         <li>No upcoming events</li> 
+       </ul> 
+     </div> 
+
+   </div> 
+
+   <button class="back-home-button" onclick="window.location.href='Admin.html'">Back Home</button> 
+
+   <script> 
+     function addIndividualStudent(event) { 
+       event.preventDefault
+       const level = document.getElementById('studentLevel').value; 
+       const name = document.getElementById('studentName').value; 
+       const id = document.getElementById('studentID').value; 
+       const gradeYear = document.getElementById('studentGradeYear').value; 
+       const classSection = document.getElementById('studentClassSection').value; 
+       const table = document.getElementById('studentTable'); 
+       const row = table.insertRow(); 
+       row.innerHTML = `<td><span class="math-inline">\{name\}</td\><td\></span>{level}</td><td><span class="math-inline">\{id\}</td\><td\></span>{gradeYear}</td><td>${classSection}</td>`; 
+       event.target.reset(); 
+       updateStudentCounts(); // Update the overview counts 
+     } 
+
+     function addIndividualTeacher(event) { 
+       event.preventDefault(); 
+       const level = document.getElementById('teacherLevel').value; 
+       const name = document.getElementById('teacherName').value; 
+       const id = document.getElementById('teacherID').value; 
+       const subject = document.getElementById('teacherSubject').value; 
+       const table = document.getElementById('teacherTable'); 
+       const row = table.insertRow(); 
+       row.innerHTML = `<td><span class="math-inline">\{name\}</td\><td\></span>{level}</td><td><span class="math-inline">\{id\}</td\><td\></span>{subject}</td>`; 
+       event.target.reset(); 
+       updateTeacherCounts(); // Update the overview counts 
+     } 
+
+     function addDetailedSchedule(event) { 
+       event.preventDefault(); 
+       const title = document.getElementById('eventTitle').value; 
+       const date = document.getElementById('eventDate').value; 
+       const time = document.getElementById('eventTime').value; 
+       const description = document.getElementById('eventDescription').value; 
+       const ul = document.getElementById('scheduleList'); 
+       const li = document.createElement('li'); 
+       li.textContent = `${title} - Date: ${date}, Time: <span class="math-inline">\{time\} \(</span>{description})`; 
+       ul.appendChild(li); 
+       event.target.reset(); 
+       updateUpcomingEventsCount(); 
+     } 
+
+     function updateStudentCounts() { 
+       const studentTable = document.getElementById('studentTable'); 
+       let elementaryCount = 0; 
+       let juniorHighCount = 0; 
+       let seniorHighCount = 0; 
+       let collegeCount = 0; 
+
+       for (let i = 1; i < studentTable.rows.length; i++) { // Skip header row 
+         const level = studentTable.rows[i].cells[1].textContent; 
+         if (level === 'Elementary') { 
+           elementaryCount++; 
+         } else if (level === 'Junior High') { 
+           juniorHighCount++; 
+         } else if (level === 'Senior High') { 
+           seniorHighCount++; 
+         } else if (level === 'College') { 
+           collegeCount++; 
+         } 
+       } 
+
+       document.querySelector('.card:first-child table tr:nth-child(2) td').textContent = elementaryCount; 
+       document.querySelector('.card:first-child table tr:nth-child(3) td').textContent = juniorHighCount; 
+       document.querySelector('.card:first-child table tr:nth-child(4) td').textContent = seniorHighCount; 
+       document.querySelector('.card:first-child table tr:nth-child(5) td').textContent = collegeCount; 
+       document.querySelector('.card:first-child table tr:nth-child(1) td').textContent = studentTable.rows.length - 1; // Total students 
+
+       const levelList = document.getElementById('levelList'); 
+       levelList.innerHTML = ` 
+         <li>Elementary: ${elementaryCount}</li> 
+         <li>Junior High: ${juniorHighCount}</li> 
+         <li>Senior High: ${seniorHighCount}</li> 
+         <li>College: ${collegeCount}</li> 
+       `; 
+     } 
+
+     function updateTeacherCounts() { 
+       const teacherTable = document.getElementById('teacherTable'); 
+       let elementaryCount = 0; 
+       let juniorHighCount = 0; 
+       let seniorHighCount = 0; 
+       let collegeCount = 0; 
+
+       for (let i = 1; i < teacherTable.rows.length; i++) { // Skip header row 
+         const level = teacherTable.rows[i].cells[1].textContent; 
+         if (level === 'Elementary') { 
+           elementaryCount++; 
+         } else if (level === 'Junior High') { 
+           juniorHighCount++; 
+         } else if (level === 'Senior High') { 
+           seniorHighCount++; 
+         } else if (level === 'College') { 
+           collegeCount++; 
+         } 
+       } 
+
+       document.querySelector('.card:first-child table tr:nth-child(7) td').textContent = elementaryCount; 
+       document.querySelector('.card:first-child table tr:nth-child(8) td').textContent = juniorHighCount; 
+       document.querySelector('.card:first-child table tr:nth-child(9) td').textContent = seniorHighCount; 
+       document.querySelector('.card:first-child table tr:nth-child(10) td').textContent = collegeCount; 
+       document.querySelector('.card:first-child table tr:nth-child(6) td').textContent = teacherTable.rows.length - 1; // Total teachers 
+     } 
+
+     function updateUpcomingEventsCount() { 
+       const eventList = document.getElementById('scheduleList'); 
+       const eventCount = eventList.getElementsByTagName('li').length; 
+       document.getElementById('upcomingEventsCount').textContent = eventCount > 1 || (eventCount === 1 && eventList.firstChild.textContent !== 'No upcoming events') ? eventCount : 0; 
+     } 
+
+     function addLevel(event) { 
+       event.preventDefault(); 
+       const input = document.getElementById('levelInput'); 
+       const ul = document.getElementById('levelList'); 
+       const li = document.createElement('li'); 
+       li.textContent = input.value; 
+       ul.appendChild(li); 
+       input.value = ''; 
+       updateStudentCounts(); // Keep counts consistent if manually added 
+     } 
+
+     // Initial call to set counts to 0 on load 
+     updateStudentCounts(); 
+     updateTeacherCounts(); 
+     updateUpcomingEventsCount(); 
+   </script> 
+
+ </body> 
+ </html>
